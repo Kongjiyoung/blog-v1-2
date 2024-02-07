@@ -15,6 +15,16 @@ public class BoardRepository {
     private final EntityManager em;
 
     @Transactional
+    public void replySave(BoardRequest.ReplyDTO requestDTO, int userId) {
+        Query query = em.createNativeQuery("insert into reply_tb(content, user_id, created_at) values(?, ?, now())");
+        query.setParameter(1, requestDTO.getContent());
+        query.setParameter(2, userId);
+
+        query.executeUpdate();
+    }
+
+
+    @Transactional
     public void update(BoardRequest.UpdateDTO requestDTO, int userId){
         Query query = em.createNativeQuery("update board_tb set title = ?, content = ? where id = ?");
         query.setParameter(1, requestDTO.getTitle());

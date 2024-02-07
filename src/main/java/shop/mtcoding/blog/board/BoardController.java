@@ -132,7 +132,7 @@ public class BoardController {
     }
 
     @GetMapping("/board/{id}")
-    public String detail(@PathVariable int id, HttpServletRequest request) {
+    public String detail(@PathVariable int id, HttpServletRequest request, BoardRequest.ReplyDTO requestDTO) {
 
         //1. 모델 진입 - 상세보기 데이터 가져오기
         BoardResponse.DetailDTO responseDTO = boardRepository.findByIdWithUser(id);
@@ -147,9 +147,11 @@ public class BoardController {
             pageOwner = 게시글작성자번호 == 로그인한사람의번호;
         }
         //2. 페이지 주인 여부 체크 (board와 userId와 sessionUser의 id를 비교)
-
+        BoardRepository.replySave(requestDTO, sessionUser.getId());
         request.setAttribute("board", responseDTO);
         request.setAttribute("pageOwner", pageOwner);
+
+
         return "board/detail";
     }
 }

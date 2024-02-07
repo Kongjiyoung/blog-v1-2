@@ -20,4 +20,9 @@ public class BoardRequest {
         private String title;
         private String content;
     }
+
+    @Data
+    public static class ReplyDTO {
+        private String content;
+    }
 }
