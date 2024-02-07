@@ -12,9 +12,10 @@ public class Reply {
     @Id // PK 설정
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment 전략
     private int id;
-    private String content;
+    private String comment;
 
     private int userId; // 테이블에 만들어 질때 user_id
+    private int boardId;
 
     private LocalDateTime createdAt;
 }

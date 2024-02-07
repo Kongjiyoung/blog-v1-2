@@ -23,6 +23,6 @@ public class BoardRequest {
 
     @Data
     public static class ReplyDTO {
-        private String content;
+        private String comment;
     }
 }
