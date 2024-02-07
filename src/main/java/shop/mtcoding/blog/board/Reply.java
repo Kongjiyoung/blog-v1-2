@@ -14,8 +14,8 @@ public class Reply {
     private int id;
     private String comment;
 
-    private int userId; // 테이블에 만들어 질때 user_id
     private int boardId;
+    private int userId; // 테이블에 만들어 질때 user_id
 
-    private LocalDateTime createdAt;
+    private String username;
 }

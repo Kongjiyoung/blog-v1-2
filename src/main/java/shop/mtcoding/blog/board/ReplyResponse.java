@@ -1,19 +1,18 @@
 package shop.mtcoding.blog.board;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
 
-public class BoardResponse {
-
+public class ReplyResponse {
     @Data
-    public static class DetailDTO {
+    public static class replyViewDTO{
         private int id;
-        private String title;
-        private String content;
+        private String comment;
+        private int boardId;
         private int userId;
         private String username;
+
     }
 }

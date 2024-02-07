@@ -22,6 +22,7 @@ public class BoardController {
     //파싱방법이 똑같아서 바로 받을 수 있다 String title, String content 이런식으로
 
 
+    @PostMapping("/board/{id}/update")
     public String update(@PathVariable int id, BoardRequest.UpdateDTO requestDTO) {
         //1. 인증체크
         User sessionUser = (User) session.getAttribute("sessionUser");
@@ -135,7 +136,6 @@ public class BoardController {
 
     @GetMapping("/board/{id}")
     public String detail(@PathVariable int id, HttpServletRequest request) {
-
         //1. 모델 진입 - 상세보기 데이터 가져오기
         BoardResponse.DetailDTO responseDTO = boardRepository.findByIdWithUser(id);
 
@@ -149,10 +149,11 @@ public class BoardController {
             int 로그인한사람의번호 = sessionUser.getId();
             pageOwner = 게시글작성자번호 == 로그인한사람의번호;
         }
+
         request.setAttribute("board", responseDTO);
         request.setAttribute("pageOwner", pageOwner);
 
-        List<Reply> replyList = replyRepository.findAll();
+        List<Reply> replyList = replyRepository.findAll(id);
         request.setAttribute("replyList", replyList);
 
         return "board/detail";
@@ -161,10 +162,13 @@ public class BoardController {
     @PostMapping("/board/{id}/reply/save")
     public String reply(@PathVariable int id, BoardRequest.ReplyDTO requestDTO) {
         User sessionUser = (User) session.getAttribute("sessionUser");
+        if (sessionUser == null) {
+            return "redirect:/loginForm";
+        }
         System.out.println(sessionUser);
         System.out.println(id);
-        replyRepository.replySave(requestDTO, sessionUser.getId(),id);
+        replyRepository.replySave(requestDTO,id,sessionUser.getId(),sessionUser.getUsername());
 
-        return "redirect:/detail";
+        return "redirect:/board/{id}";
     }
 }

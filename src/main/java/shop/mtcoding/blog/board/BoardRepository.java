@@ -37,11 +37,11 @@ public class BoardRepository {
         query.executeUpdate();
     }
 
-    public List<Board> findAll() {
-        Query query = em.createNativeQuery("select * from board_tb order by id desc", Board.class);
-        return query.getResultList();
-    }
 
+    public List<Board> findAll(){ //보드테이블의 모든 것 가지고 오기
+        Query query=em.createNativeQuery("select * from board_tb order by id desc limit 0,4", Board.class);
+        return query.getResultList(); //여러건을 들고 오기 위해서
+    }
     public Board findById(int id){
         Query query = em.createNativeQuery("select * from board_tb  where id = ?", Board.class);
         query.setParameter(1, id);
