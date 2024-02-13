@@ -25,7 +25,7 @@ public class ReplyRepository {
     }
 
     public List<Reply> findAll(int boardId) {
-        Query query = em.createNativeQuery("select t.reply_id as id, t.comment, t.board_id, u.id as user_id, u.username from (select r.id as reply_id, r.comment as comment, r.user_id as user_id, b.id  as board_id from reply_tb r inner join board_tb b on r.board_id=b.id where board_id=?) t inner join user_tb u on t.user_id=user_id", Reply.class);
+        Query query = em.createNativeQuery("select t.id, t.comment, t.board_id, u.id, u.username from (select r.id, r.comment, r.user_id, r.board_id from reply_tb r inner join board_tb b on r.board_id=b.id where board_id=?) t inner join user_tb u on t.user_id=u.id", Reply.class);
         query.setParameter(1, boardId);
         return query.getResultList();
     }
